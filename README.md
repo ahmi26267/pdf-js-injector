@@ -1,8 +1,36 @@
 # PDF JavaScript Injector
 
-A professional, user-friendly web-based tool for embedding JavaScript code into PDF documents with enhanced security features and batch processing capabilities.
+A professional, user-friendly tool for embedding JavaScript code into PDF documents with enhanced security features and batch processing capabilities.
 
 **Author**: Ahmi - Security Researcher
+
+---
+
+## ⚡ Quick Start (One Command)
+
+### Linux/Mac:
+```bash
+git clone https://github.com/ahmi/pdf-js-injector.git && cd pdf-js-injector && chmod +x install.sh && ./install.sh
+```
+
+### Windows:
+```cmd
+git clone https://github.com/ahmi/pdf-js-injector.git && cd pdf-js-injector && install.bat
+```
+
+
+Or download the repository and run `install.sh` (Linux/Mac) or `install.bat` (Windows).
+
+### With Docker Compose (Even Easier):
+```bash
+git clone https://github.com/ahmi/pdf-js-injector.git
+cd pdf-js-injector
+docker-compose up -d
+```
+
+Access at: **http://localhost:8080**
+
+---
 
 ## 🚀 Features
 
@@ -76,13 +104,183 @@ if (nameField && nameField.value === "") {
 
 ## 🚀 Getting Started
 
-## 🚀 Getting Started
+## 🚀 Getting Started - Choose Your Method
 
-### Quick Start with Docker/Podman (Recommended)
+This tool can be installed and run in multiple ways. Choose the method that works best for you:
 
-Run this tool locally using Docker or Podman containers with automatic updates.
+### Method 1: Docker Container (Easiest - Recommended)
+✅ No dependencies needed  
+✅ Works on any OS  
+✅ Auto-updates available  
+✅ Isolated and secure
 
-### Quick Start with Docker/Podman (Recommended for Easy Setup)
+### Method 2: Podman Container (Docker Alternative)
+✅ Rootless container support  
+✅ Same commands as Docker  
+✅ Great for security-conscious users
+
+### Method 3: Direct Installation (Traditional)
+✅ Full control over the application  
+✅ Good for development  
+✅ Native performance
+
+---
+
+## 📦 Installation Instructions
+
+
+---
+
+### Automated Installation (Easiest)
+
+We provide install scripts for quick setup:
+
+#### Linux/Mac:
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+#### Windows:
+Double-click `install.bat` or run in Command Prompt:
+```cmd
+install.bat
+```
+
+The script will:
+1. Check if Docker/Podman is installed
+2. Build the container
+3. Start the application
+4. Show you the access URL
+
+---
+
+### Method 1: Docker Container (Recommended)
+
+#### Step 1: Install Docker
+If you don't have Docker installed:
+- **Windows/Mac**: Download [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- **Linux**: Run `curl -fsSL https://get.docker.com | sh`
+
+#### Step 2: Download the Repository
+```bash
+git clone https://github.com/ahmi/pdf-js-injector.git
+cd pdf-js-injector
+```
+
+Or download as ZIP from GitHub and extract it.
+
+#### Step 3: Build the Container
+```bash
+docker build -t pdf-js-injector .
+```
+
+This will take 1-2 minutes the first time.
+
+#### Step 4: Run the Application
+```bash
+docker run -d -p 8080:80 --name pdf-injector --restart unless-stopped pdf-js-injector
+```
+
+#### Step 5: Access the Tool
+Open your browser and go to: **http://localhost:8080**
+
+That's it! The tool is now running.
+
+#### Managing the Container
+
+**Check if it's running:**
+```bash
+docker ps
+```
+
+**Stop the application:**
+```bash
+docker stop pdf-injector
+```
+
+**Start it again:**
+```bash
+docker start pdf-injector
+```
+
+**View logs:**
+```bash
+docker logs pdf-injector
+```
+
+**Remove the container:**
+```bash
+docker stop pdf-injector
+docker rm pdf-injector
+```
+
+**Update to latest version:**
+```bash
+docker stop pdf-injector
+docker rm pdf-injector
+git pull
+docker build -t pdf-js-injector .
+docker run -d -p 8080:80 --name pdf-injector --restart unless-stopped pdf-js-injector
+```
+
+---
+
+### Method 2: Podman Container (Docker Alternative)
+
+Podman is a Docker alternative that doesn't require root access.
+
+#### Step 1: Install Podman
+- **Windows**: Download from [Podman Desktop](https://podman-desktop.io/)
+- **Mac**: `brew install podman`
+- **Linux**: Check [Podman Installation Guide](https://podman.io/getting-started/installation)
+
+#### Step 2-5: Same as Docker
+Just replace `docker` with `podman` in all commands:
+
+```bash
+# Download repository
+git clone https://github.com/ahmi/pdf-js-injector.git
+cd pdf-js-injector
+
+# Build
+podman build -t pdf-js-injector .
+
+# Run
+podman run -d -p 8080:80 --name pdf-injector --restart unless-stopped pdf-js-injector
+
+# Access at: http://localhost:8080
+```
+
+**Managing with Podman:**
+```bash
+# Check status
+podman ps
+
+# Stop
+podman stop pdf-injector
+
+# Start
+podman start pdf-injector
+
+# View logs
+podman logs pdf-injector
+
+# Remove
+podman stop pdf-injector
+podman rm pdf-injector
+
+# Update
+podman stop pdf-injector
+podman rm pdf-injector
+git pull
+podman build -t pdf-js-injector .
+podman run -d -p 8080:80 --name pdf-injector --restart unless-stopped pdf-js-injector
+```
+
+---
+
+### Method 3: Direct Installation (Traditional)
 
 The easiest way to run this tool locally is using Docker or Podman containers.
 
