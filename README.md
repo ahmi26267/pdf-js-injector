@@ -81,7 +81,78 @@ Visit the live application at: [PDF JS Injector](https://lovable.dev/projects/da
 
 No downloads, no setup - just open and use!
 
-### Download & Install Locally
+### Quick Start with Docker/Podman (Recommended for Easy Setup)
+
+The easiest way to run this tool locally is using Docker or Podman containers.
+
+#### Prerequisites
+- **Docker** ([Install Docker](https://docs.docker.com/get-docker/)) OR
+- **Podman** ([Install Podman](https://podman.io/getting-started/installation))
+
+#### Option 1: Using Docker
+
+1. **Clone or download the repository**
+   ```bash
+   git clone <repository-url>
+   cd pdf-js-injector
+   ```
+
+2. **Build the Docker image**
+   ```bash
+   docker build -t pdf-js-injector .
+   ```
+
+3. **Run the container**
+   ```bash
+   docker run -d -p 8080:80 --name pdf-injector pdf-js-injector
+   ```
+
+4. **Open in browser**
+   
+   Navigate to: `http://localhost:8080`
+
+5. **Stop the container**
+   ```bash
+   docker stop pdf-injector
+   ```
+
+6. **Restart the container**
+   ```bash
+   docker start pdf-injector
+   ```
+
+7. **Remove the container**
+   ```bash
+   docker stop pdf-injector
+   docker rm pdf-injector
+   ```
+
+#### Option 2: Using Podman
+
+Podman uses the same commands as Docker, just replace `docker` with `podman`:
+
+1. **Build the image**
+   ```bash
+   podman build -t pdf-js-injector .
+   ```
+
+2. **Run the container**
+   ```bash
+   podman run -d -p 8080:80 --name pdf-injector pdf-js-injector
+   ```
+
+3. **Open in browser**
+   
+   Navigate to: `http://localhost:8080`
+
+#### Docker/Podman Benefits
+- ✅ No need to install Node.js or npm
+- ✅ Isolated environment - doesn't affect your system
+- ✅ Consistent setup across all platforms (Windows, Mac, Linux)
+- ✅ Easy to start, stop, and remove
+- ✅ Production-ready configuration with nginx
+
+### Download & Install Locally (Traditional Method)
 
 #### Prerequisites
 - **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
