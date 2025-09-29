@@ -22,14 +22,31 @@ export class PDFProcessor {
       const arrayBuffer = await file.arrayBuffer();
       const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-      // Add JavaScript as an open action
-      pdfDoc.addJavaScript(
-        'openAction',
-        this.javascriptCode
-      );
+      // Add JavaScript with multiple injection methods for better compatibility
+      
+      // Method 1: Add JavaScript as document-level script
+      pdfDoc.addJavaScript('DocOpen', this.javascriptCode);
+      
+      // Method 2: Add JavaScript as page open action for first page
+      const pages = pdfDoc.getPages();
+      if (pages.length > 0) {
+        const firstPage = pages[0];
+        // Add page-level JavaScript action
+        pdfDoc.addJavaScript('PageOpen', this.javascriptCode);
+      }
+      
+      // Method 3: Add JavaScript as open action (original method)
+      pdfDoc.addJavaScript('openAction', this.javascriptCode);
+      
+      // Method 4: Add as named action for broader compatibility
+      pdfDoc.addJavaScript('CustomScript', this.javascriptCode);
 
-      // Save the modified PDF
-      const pdfBytes = await pdfDoc.save();
+      // Save the modified PDF with enhanced settings
+      const pdfBytes = await pdfDoc.save({
+        useObjectStreams: false, // Better compatibility
+        addDefaultPage: false
+      });
+      
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       
       return {
