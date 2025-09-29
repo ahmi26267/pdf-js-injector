@@ -10,12 +10,12 @@ A professional, user-friendly tool for embedding JavaScript code into PDF docume
 
 ### Linux/Mac:
 ```bash
-git clone https://github.com/ahmi/pdf-js-injector.git && cd pdf-js-injector && chmod +x install.sh && ./install.sh
+git clone https://github.com/ahmi26267/pdf-js-injector.git && cd pdf-js-injector && chmod +x install.sh && ./install.sh
 ```
 
 ### Windows:
 ```cmd
-git clone https://github.com/ahmi/pdf-js-injector.git && cd pdf-js-injector && install.bat
+git clone https://github.com/ahmi26267/pdf-js-injector.git && cd pdf-js-injector && install.bat
 ```
 
 
@@ -23,7 +23,7 @@ Or download the repository and run `install.sh` (Linux/Mac) or `install.bat` (Wi
 
 ### With Docker Compose (Even Easier):
 ```bash
-git clone https://github.com/ahmi/pdf-js-injector.git
+git clone https://github.com/ahmi26267/pdf-js-injector.git
 cd pdf-js-injector
 docker-compose up -d
 ```
