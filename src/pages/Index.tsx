@@ -7,6 +7,7 @@ import { FileDropZone } from '@/components/FileDropZone';
 import { JavaScriptEditor } from '@/components/JavaScriptEditor';
 import { SecurityWarning } from '@/components/SecurityWarning';
 import { ProcessingStatus, ProcessedFile } from '@/components/ProcessingStatus';
+import { UpdateChecker } from '@/components/UpdateChecker';
 import { PDFProcessor } from '@/utils/pdf';
 import { useToast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-cyber.jpg';
@@ -155,10 +156,11 @@ const Index = () => {
               <div className="p-4 bg-primary/20 rounded-full">
                 <Shield className="h-12 w-12 text-primary" />
               </div>
-              <h1 className="text-5xl font-bold bg-gradient-cyber bg-clip-text text-transparent">
-                PDF JS Injector
-              </h1>
             </div>
+            
+            <h1 className="text-5xl font-bold bg-gradient-cyber bg-clip-text text-transparent">
+              PDF JS Injector
+            </h1>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Professional tool for embedding JavaScript into PDF documents. 
@@ -341,6 +343,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      
+      <UpdateChecker />
     </div>
   );
 };

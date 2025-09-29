@@ -76,10 +76,11 @@ if (nameField && nameField.value === "") {
 
 ## 🚀 Getting Started
 
-### Online Tool (No Installation Required)
-Visit the live application at: [PDF JS Injector](https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231)
+## 🚀 Getting Started
 
-No downloads, no setup - just open and use!
+### Quick Start with Docker/Podman (Recommended)
+
+Run this tool locally using Docker or Podman containers with automatic updates.
 
 ### Quick Start with Docker/Podman (Recommended for Easy Setup)
 
@@ -144,6 +145,44 @@ Podman uses the same commands as Docker, just replace `docker` with `podman`:
 3. **Open in browser**
    
    Navigate to: `http://localhost:8080`
+
+#### Auto-Update Container
+
+To always run the latest version with auto-updates:
+
+**Docker:**
+```bash
+docker run -d -p 8080:80 --name pdf-injector --restart unless-stopped \
+  --pull always ghcr.io/ahmi/pdf-js-injector:latest
+```
+
+**Podman:**
+```bash
+podman run -d -p 8080:80 --name pdf-injector --restart unless-stopped \
+  --pull always ghcr.io/ahmi/pdf-js-injector:latest
+```
+
+The `--pull always` flag ensures the container checks for updates on every restart.
+
+#### Manual Update
+
+To manually update to the latest version:
+
+**Docker:**
+```bash
+docker pull ghcr.io/ahmi/pdf-js-injector:latest
+docker stop pdf-injector
+docker rm pdf-injector
+docker run -d -p 8080:80 --name pdf-injector ghcr.io/ahmi/pdf-js-injector:latest
+```
+
+**Podman:**
+```bash
+podman pull ghcr.io/ahmi/pdf-js-injector:latest
+podman stop pdf-injector
+podman rm pdf-injector
+podman run -d -p 8080:80 --name pdf-injector ghcr.io/ahmi/pdf-js-injector:latest
+```
 
 #### Docker/Podman Benefits
 - ✅ No need to install Node.js or npm
