@@ -1,73 +1,186 @@
-# Welcome to your Lovable project
+# PDF JavaScript Injector
 
-## Project info
+A professional web-based tool for embedding JavaScript code into PDF documents with enhanced security features and batch processing capabilities.
 
-**URL**: https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231
+## 🚀 Features
 
-## How can I edit this code?
+- **Batch Processing**: Process multiple PDF files simultaneously
+- **Security Validation**: Built-in JavaScript code validation with security warnings
+- **Modern Interface**: Beautiful, responsive design with drag-and-drop functionality
+- **Real-time Progress**: Track processing status with detailed progress indicators
+- **Flexible Downloads**: Download individual files or batch ZIP archives
+- **Example Library**: Pre-built JavaScript examples for common use cases
+- **Cross-platform**: Works in any modern web browser
 
-There are several ways of editing your application.
+## 🔧 Technology Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript
+- **PDF Processing**: PDF-lib for client-side PDF manipulation
+- **UI Framework**: shadcn/ui with Tailwind CSS
+- **Build Tool**: Vite
+- **File Handling**: React Dropzone for drag-and-drop functionality
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231) and start prompting.
+## 🛡️ Security Features
 
-Changes made via Lovable will be committed automatically to this repo.
+### Built-in Validation
+- Syntax checking for JavaScript code
+- Detection of potentially dangerous functions
+- Network activity warnings
+- File system access alerts
 
-**Use your preferred IDE**
+### Security Warnings
+- Clear documentation of risks and legitimate uses
+- Prominent security notices throughout the interface
+- Best practices guidance for safe usage
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🎯 Use Cases
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Legitimate Applications
+- **Form Validation**: Add client-side validation to PDF forms
+- **Auto-printing**: Configure PDFs to print automatically when opened
+- **Dynamic Content**: Generate timestamps, user info, or calculated fields
+- **Accessibility**: Enhance PDFs with screen reader support
+- **Workflow Automation**: Streamline document processing workflows
 
-Follow these steps:
+### Example JavaScript Functions
+```javascript
+// Simple alert when PDF opens
+app.alert("Welcome! This PDF contains embedded JavaScript.", 3);
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+// Auto-print functionality
+this.print({
+  bUI: false,
+  bSilent: true,
+  bShrinkToFit: true
+});
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+// Form field validation
+var nameField = this.getField("name");
+if (nameField && nameField.value === "") {
+  app.alert("Please enter your name.", 1);
+  nameField.setFocus();
+}
 ```
 
-**Edit a file directly in GitHub**
+## 🚀 Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Online Tool
+Visit the live application at: [PDF JS Injector](https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231)
 
-**Use GitHub Codespaces**
+### Local Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd pdf-js-injector
+   ```
 
-## What technologies are used for this project?
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-This project is built with:
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-## How can I deploy this project?
+## 📖 Usage Guide
 
-Simply open [Lovable](https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231) and click on Share -> Publish.
+### Step 1: Upload PDF Files
+- Drag and drop PDF files into the upload zone
+- Or click "Choose Files" to select PDFs from your device
+- Multiple files are supported for batch processing
 
-## Can I connect a custom domain to my Lovable project?
+### Step 2: Write or Select JavaScript Code
+- Use the built-in code editor to write custom JavaScript
+- Select from pre-built examples using the dropdown menu
+- Preview your code with the toggle button
+- View validation results and security warnings
 
-Yes, you can!
+### Step 3: Process Files
+- Click "Inject JavaScript into PDFs" to start processing
+- Monitor real-time progress for batch operations
+- Review processing results and error messages
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Step 4: Download Results
+- Download individual processed files
+- Or download all successful files as a ZIP archive
+- Files are prefixed with "js_injected_" for easy identification
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## ⚠️ Security Considerations
+
+### Important Warnings
+- **Potentially Dangerous**: This tool can create PDFs that execute code when opened
+- **Use Responsibly**: Only inject JavaScript code you trust and understand
+- **Disclosure Required**: Always inform recipients about embedded JavaScript
+- **Test Thoroughly**: Verify functionality in target PDF viewers
+
+### Risk Mitigation
+- Code validation helps identify potentially dangerous functions
+- Security warnings alert users to risks
+- Example library provides safe, tested code snippets
+- Documentation emphasizes responsible usage
+
+## 🔧 Technical Implementation
+
+### PDF Processing Pipeline
+1. **File Reading**: Convert uploaded PDFs to ArrayBuffer
+2. **PDF Parsing**: Use PDF-lib to load and parse PDF structure
+3. **JavaScript Injection**: Add code as document open action
+4. **PDF Generation**: Save modified PDF with embedded JavaScript
+5. **Download Preparation**: Create downloadable blob with proper MIME type
+
+### JavaScript Validation
+- Syntax checking for basic errors
+- Pattern matching for dangerous functions
+- Network activity detection
+- File system access warnings
+
+### Browser Compatibility
+- Modern browsers with ES2020+ support
+- File API and ArrayBuffer support required
+- Blob download functionality needed
+
+## 📊 Performance Characteristics
+
+- **Client-side Processing**: No server uploads required
+- **Memory Efficient**: Streaming processing for large files
+- **Batch Optimized**: Parallel processing with progress tracking
+- **Responsive Design**: Works on desktop and mobile devices
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+
+### Development Guidelines
+- Follow TypeScript best practices
+- Maintain security-first approach
+- Include tests for new features
+- Update documentation as needed
+
+## 📄 License
+
+This project is provided as-is for educational and professional use. Users are responsible for complying with all applicable laws and regulations regarding PDF modification and JavaScript execution.
+
+## 🆘 Support
+
+For issues, questions, or feature requests:
+- Open an issue on GitHub
+- Check existing documentation
+- Review security guidelines before use
+
+## 🔗 Related Resources
+
+- [PDF-lib Documentation](https://pdf-lib.js.org/)
+- [Adobe Acrobat JavaScript Reference](https://www.adobe.com/devnet/acrobat/javascript.html)
+- [PDF Security Best Practices](https://www.adobe.com/devnet/acrobat/security.html)
+
+---
+
+**⚠️ Disclaimer**: This tool is designed for legitimate professional use. Users are responsible for ensuring compliance with security policies and legal requirements when distributing PDFs with embedded JavaScript.
