@@ -324,7 +324,11 @@ const Index = () => {
               <span className="font-semibold">PDF JS Injector</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              A professional tool for PDF JavaScript injection with enhanced security features.
+              Created by <strong>Ahmi - Security Researcher</strong>
+            </p>
+            <p className="text-xs text-muted-foreground max-w-2xl mx-auto">
+              For authorized security research and legitimate professional use only. 
+              Users are responsible for compliance with all applicable laws.
             </p>
             <div className="flex items-center justify-center gap-4">
               <Button variant="ghost" size="sm" asChild>

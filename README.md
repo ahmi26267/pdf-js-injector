@@ -32,6 +32,29 @@ Access at: **http://localhost:8080**
 
 ---
 
+## ⚠️ AUTHORIZATION WARNING
+
+**USE THIS TOOL FOR AUTHORIZED PURPOSES ONLY**
+
+This tool is designed for legitimate security research, testing, and authorized PDF modification purposes. You must have explicit permission to modify and test PDFs on any system or application.
+
+**DISCLAIMER:** The author (**Ahmi - Security Researcher**) and all contributors are **NOT RESPONSIBLE** for any misuse, unauthorized access, damage, or illegal activities performed with this tool. Users bear full legal responsibility for their actions.
+
+**LEGAL NOTICE:** Unauthorized access to computer systems, applications, or documents is illegal under:
+- Computer Fraud and Abuse Act (CFAA) - United States
+- Computer Misuse Act - United Kingdom  
+- Similar laws in other jurisdictions
+
+By downloading, installing, or using this tool, you acknowledge that:
+1. You have proper authorization for your intended use
+2. You accept full responsibility for your actions
+3. You will comply with all applicable laws and regulations
+4. You understand the security implications of PDF JavaScript injection
+
+**Use responsibly. Stay legal. Get permission first.**
+
+---
+
 ## 🚀 Features
 
 - **Batch Processing**: Process multiple PDF files simultaneously
@@ -584,6 +607,30 @@ This project is provided as-is for educational and professional use. Users are r
 
 Specializing in PDF security research and JavaScript injection techniques.
 
+For educational and authorized security research purposes only.
+
+---
+
+## ⚠️ Final Disclaimer
+
+**This tool is designed for security research and legitimate professional use only.**
+
+The author and contributors provide this tool "as-is" without any warranties. Users are solely responsible for ensuring compliance with security policies, organizational rules, and legal requirements when using PDFs with embedded JavaScript.
+
+**Never use this tool for:**
+- Unauthorized access to systems or applications
+- Malicious attacks or exploits
+- Distribution of harmful content
+- Any illegal activities
+
+**Always:**
+- Obtain proper authorization before testing
+- Use in controlled, legal environments
+- Comply with responsible disclosure practices
+- Follow applicable laws and regulations
+
+**By using this tool, you agree to use it responsibly and legally.**
+
 ---
 
 ## 🎯 Quick Test
@@ -597,4 +644,6 @@ Upload any PDF, inject this code, open the result in Adobe Acrobat/Reader, and y
 
 ---
 
-**⚠️ Disclaimer**: This tool is designed for security research and legitimate professional use. Users are responsible for ensuring compliance with security policies and legal requirements when distributing PDFs with embedded JavaScript. Always obtain proper authorization before testing on systems you don't own.
+**Created by Ahmi - Security Researcher**
+
+This tool is provided for educational and authorized security research purposes only. The author and contributors are NOT responsible for any misuse, unauthorized access, or illegal activities. Users must comply with all applicable laws and obtain proper authorization before use.
