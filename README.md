@@ -1,6 +1,8 @@
 # PDF JavaScript Injector
 
-A professional web-based tool for embedding JavaScript code into PDF documents with enhanced security features and batch processing capabilities.
+A professional, user-friendly web-based tool for embedding JavaScript code into PDF documents with enhanced security features and batch processing capabilities.
+
+**Author**: Ahmi - Security Researcher
 
 ## 🚀 Features
 
@@ -19,6 +21,8 @@ A professional web-based tool for embedding JavaScript code into PDF documents w
 - **UI Framework**: shadcn/ui with Tailwind CSS
 - **Build Tool**: Vite
 - **File Handling**: React Dropzone for drag-and-drop functionality
+- **Styling**: Tailwind CSS with custom design system
+- **Deployment**: Works on any static hosting (Netlify, Vercel, GitHub Pages, etc.)
 
 ## 🛡️ Security Features
 
@@ -43,8 +47,16 @@ A professional web-based tool for embedding JavaScript code into PDF documents w
 - **Workflow Automation**: Streamline document processing workflows
 
 ### Example JavaScript Functions
+
+**Quick Test Payload**
 ```javascript
-// Simple alert when PDF opens
+// Simple test to verify injection works
+app.alert('you are hacked');
+```
+
+**More Examples**
+```javascript
+// Welcome message when PDF opens
 app.alert("Welcome! This PDF contains embedded JavaScript.", 3);
 
 // Auto-print functionality
@@ -64,54 +76,116 @@ if (nameField && nameField.value === "") {
 
 ## 🚀 Getting Started
 
-### Online Tool
+### Online Tool (No Installation Required)
 Visit the live application at: [PDF JS Injector](https://lovable.dev/projects/daa3db90-362d-41b2-95b7-2264075d9231)
 
-### Local Development
+No downloads, no setup - just open and use!
 
-1. **Clone the repository**
+### Download & Install Locally
+
+#### Prerequisites
+- **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js) or **bun**
+- A modern web browser (Chrome, Firefox, Edge, Safari)
+
+#### Installation Steps
+
+1. **Download the repository**
+   
+   **Option A: Download ZIP**
+   - Click the green "Code" button on GitHub
+   - Select "Download ZIP"
+   - Extract the ZIP file to your desired location
+   
+   **Option B: Clone with Git**
    ```bash
    git clone <repository-url>
    cd pdf-js-injector
    ```
 
 2. **Install dependencies**
+   
+   Open terminal/command prompt in the project folder and run:
    ```bash
    npm install
    ```
+   
+   Or if using bun:
+   ```bash
+   bun install
+   ```
 
-3. **Start development server**
+3. **Start the application**
    ```bash
    npm run dev
    ```
+   
+   Or with bun:
+   ```bash
+   bun run dev
+   ```
 
-4. **Build for production**
+4. **Open in browser**
+   
+   The tool will automatically open at: `http://localhost:8080`
+   
+   If it doesn't open automatically, just paste this URL in your browser.
+
+5. **Build for production (optional)**
+   
+   To create an optimized production build:
    ```bash
    npm run build
    ```
+   
+   The built files will be in the `dist` folder.
 
 ## 📖 Usage Guide
 
-### Step 1: Upload PDF Files
-- Drag and drop PDF files into the upload zone
-- Or click "Choose Files" to select PDFs from your device
-- Multiple files are supported for batch processing
+### Quick Start - Test the Tool
 
-### Step 2: Write or Select JavaScript Code
-- Use the built-in code editor to write custom JavaScript
-- Select from pre-built examples using the dropdown menu
-- Preview your code with the toggle button
-- View validation results and security warnings
+Want to quickly test if the tool works? Use this simple test payload:
 
-### Step 3: Process Files
-- Click "Inject JavaScript into PDFs" to start processing
-- Monitor real-time progress for batch operations
-- Review processing results and error messages
+```javascript
+app.alert('you are hacked');
+```
 
-### Step 4: Download Results
-- Download individual processed files
-- Or download all successful files as a ZIP archive
-- Files are prefixed with "js_injected_" for easy identification
+This will display an alert when the PDF is opened, perfect for testing on vulnerable sites or your own PDFs.
+
+### Step-by-Step Instructions
+
+#### Step 1: Upload PDF Files
+- **Drag and drop** PDF files into the upload zone, OR
+- Click **"Choose Files"** to select PDFs from your device
+- ✅ Multiple files are supported for batch processing
+
+#### Step 2: Write or Select JavaScript Code
+
+**Option A: Use a Quick Test**
+```javascript
+app.alert('you are hacked');
+```
+
+**Option B: Choose from Examples**
+- Click the **dropdown menu** to see pre-built examples
+- Select any example (auto-print, form validation, etc.)
+- The code will automatically populate
+
+**Option C: Write Custom JavaScript**
+- Type or paste your JavaScript code in the editor
+- Real-time character count shown at bottom
+- Click **"Preview Code"** to see your formatted code
+
+#### Step 3: Process Files
+- Click **"Inject JavaScript into PDFs"** button
+- Watch the real-time progress bar (especially for batch operations)
+- See success/error messages for each file
+
+#### Step 4: Download Results
+- **Single file**: Click download button next to each processed file
+- **Batch download**: Click "Download All" to get a ZIP archive
+- All files are prefixed with `js_injected_` for easy identification
+- A processing summary text file is included in batch downloads
 
 ## ⚠️ Security Considerations
 
@@ -168,12 +242,25 @@ Contributions are welcome! Please feel free to submit issues, feature requests, 
 
 This project is provided as-is for educational and professional use. Users are responsible for complying with all applicable laws and regulations regarding PDF modification and JavaScript execution.
 
-## 🆘 Support
+## 🆘 Support & Troubleshooting
 
-For issues, questions, or feature requests:
+### Common Issues
+
+**JavaScript not executing in PDF?**
+- Ensure JavaScript is enabled in your PDF viewer (Adobe Acrobat/Reader)
+- Check if the PDF viewer shows security warnings - you may need to allow the script
+- Test with the simple payload: `app.alert('you are hacked');`
+
+**Upload not working?**
+- Check file format - must be valid PDF files
+- Try a smaller PDF file first
+- Ensure your browser supports modern JavaScript (File API)
+
+**Need Help?**
 - Open an issue on GitHub
 - Check existing documentation
 - Review security guidelines before use
+- Contact: Ahmi (Security Researcher)
 
 ## 🔗 Related Resources
 
@@ -183,4 +270,23 @@ For issues, questions, or feature requests:
 
 ---
 
-**⚠️ Disclaimer**: This tool is designed for legitimate professional use. Users are responsible for ensuring compliance with security policies and legal requirements when distributing PDFs with embedded JavaScript.
+## 👤 Author
+
+**Ahmi** - Security Researcher
+
+Specializing in PDF security research and JavaScript injection techniques.
+
+---
+
+## 🎯 Quick Test
+
+Want to verify the tool works? Use this payload:
+```javascript
+app.alert('you are hacked');
+```
+
+Upload any PDF, inject this code, open the result in Adobe Acrobat/Reader, and you should see the alert.
+
+---
+
+**⚠️ Disclaimer**: This tool is designed for security research and legitimate professional use. Users are responsible for ensuring compliance with security policies and legal requirements when distributing PDFs with embedded JavaScript. Always obtain proper authorization before testing on systems you don't own.
