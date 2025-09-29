@@ -7,7 +7,7 @@ import { FileDropZone } from '@/components/FileDropZone';
 import { JavaScriptEditor } from '@/components/JavaScriptEditor';
 import { SecurityWarning } from '@/components/SecurityWarning';
 import { ProcessingStatus, ProcessedFile } from '@/components/ProcessingStatus';
-import { PDFProcessor } from '@/utils/pdfProcessor';
+import { PDFProcessor } from '@/utils/pdf';
 import { useToast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-cyber.jpg';
 import jsIcon from '@/assets/js-icon.png';

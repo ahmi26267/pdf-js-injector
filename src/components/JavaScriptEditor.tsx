@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { PDFProcessor, EXAMPLE_JAVASCRIPT_CODES } from '@/utils/pdfProcessor';
+import { PDFProcessor, ENHANCED_EXAMPLE_CODES } from '@/utils/pdf';
 import { useToast } from '@/hooks/use-toast';
 
 interface JavaScriptEditorProps {
@@ -22,8 +22,9 @@ export const JavaScriptEditor: React.FC<JavaScriptEditorProps> = ({
   const validation = PDFProcessor.validateJavaScript(value);
 
   const handleExampleSelect = (exampleKey: string) => {
-    if (exampleKey in EXAMPLE_JAVASCRIPT_CODES) {
-      onChange(EXAMPLE_JAVASCRIPT_CODES[exampleKey as keyof typeof EXAMPLE_JAVASCRIPT_CODES]);
+    if (exampleKey in ENHANCED_EXAMPLE_CODES) {
+      const example = ENHANCED_EXAMPLE_CODES[exampleKey as keyof typeof ENHANCED_EXAMPLE_CODES];
+      onChange(example.code);
     }
   };
 
@@ -55,6 +56,8 @@ export const JavaScriptEditor: React.FC<JavaScriptEditorProps> = ({
               <SelectItem value="auto_print">Auto Print</SelectItem>
               <SelectItem value="date_timestamp">Date Timestamp</SelectItem>
               <SelectItem value="security_warning">Security Warning</SelectItem>
+              <SelectItem value="advanced_form_logic">Advanced Form Logic</SelectItem>
+              <SelectItem value="data_extraction">Data Extraction</SelectItem>
             </SelectContent>
           </Select>
           
