@@ -22,48 +22,39 @@ export class PDFProcessor {
       const arrayBuffer = await file.arrayBuffer();
       const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-      // Add JavaScript using multiple methods for maximum compatibility
+      // Simple and direct JavaScript injection that actually works
       
-      // Method 1: Standard document-level JavaScript
-      pdfDoc.addJavaScript('DocumentJS', this.javascriptCode);
+      // Method 1: Use the basic addJavaScript method
+      pdfDoc.addJavaScript('EmbeddedScript', this.javascriptCode);
       
-      // Method 2: Add as open action using raw PDF objects for direct control
-      const { PDFName, PDFDict, PDFString } = await import('pdf-lib');
-      
-      const catalog = pdfDoc.catalog;
+      // Method 2: Manual injection using PDF internals for guaranteed execution
       const context = pdfDoc.context;
+      const catalog = pdfDoc.catalog;
       
-      // Create JavaScript action dictionary
-      const jsActionDict = context.obj({
+      // Import required PDF objects
+      const { PDFName, PDFString } = await import('pdf-lib');
+      
+      // Create a simple JavaScript action that executes on open
+      const jsAction = context.obj({
         Type: PDFName.of('Action'),
         S: PDFName.of('JavaScript'),
         JS: PDFString.of(this.javascriptCode)
       });
       
-      // Set as OpenAction in catalog
-      catalog.set(PDFName.of('OpenAction'), jsActionDict);
+      // Set this action to execute when the document opens
+      catalog.set(PDFName.of('OpenAction'), jsAction);
       
-      // Method 3: Add to Names dictionary for named actions
-      const existingNames = catalog.get(PDFName.of('Names'));
-      const namesDict = existingNames instanceof PDFDict ? existingNames : context.obj({});
-      
-      const jsNamesArray = context.obj([
-        PDFString.of('EmbeddedScript'),
-        jsActionDict
-      ]);
-      
-      const jsNamesDict = context.obj({
-        Names: jsNamesArray
+      // Also add it as an additional action for compatibility
+      const additionalActions = context.obj({
+        O: jsAction  // O = Open action
       });
-      
-      namesDict.set(PDFName.of('JavaScript'), jsNamesDict);
-      catalog.set(PDFName.of('Names'), namesDict);
+      catalog.set(PDFName.of('AA'), additionalActions);
 
-      // Save with optimized settings for JavaScript execution
+      // Save with minimal compression for better compatibility
       const pdfBytes = await pdfDoc.save({
         useObjectStreams: false,
         addDefaultPage: false,
-        updateFieldAppearances: false
+        updateFieldAppearances: true
       });
       
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
