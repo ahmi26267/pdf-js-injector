@@ -508,6 +508,9 @@ const Index = () => {
                 </a>
               </Button>
             </div>
+            <p className="text-[10px] text-muted-foreground/60 mt-4">
+              © IgniteeNow LLC
+            </p>
           </div>
         </div>
       </footer>
