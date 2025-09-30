@@ -316,8 +316,8 @@ const Index = () => {
                 onFilesSelected={handlePdfFilesSelected}
                 acceptedFileTypes={{ 'application/pdf': ['.pdf'] }}
                 multiple={true}
-                title="Drop PDF files here"
-                description="Select one or more PDF files to inject JavaScript into"
+                title="Upload PDF Files"
+                description="Batch process multiple PDFs simultaneously with JavaScript injection"
                 selectedFiles={pdfFiles}
                 onRemoveFile={handleRemovePdfFile}
                 icon={<img src={pdfIcon} alt="PDF" className="h-8 w-8" />}
