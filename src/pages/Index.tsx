@@ -256,7 +256,9 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <Card className="cyber-glow">
+              <Card className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => {
+                document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 <CardContent className="p-6 text-center">
                   <div className="p-3 bg-primary/20 rounded-full w-fit mx-auto mb-4">
                     <FileText className="h-8 w-8 text-primary" />
@@ -265,10 +267,15 @@ const Index = () => {
                   <p className="text-muted-foreground text-sm">
                     Process multiple PDFs simultaneously with progress tracking
                   </p>
+                  <Button variant="outline" size="sm" className="mt-4">
+                    Get Started →
+                  </Button>
                 </CardContent>
               </Card>
 
-              <Card className="cyber-glow">
+              <Card className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => {
+                document.getElementById('security')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 <CardContent className="p-6 text-center">
                   <div className="p-3 bg-accent/20 rounded-full w-fit mx-auto mb-4">
                     <Shield className="h-8 w-8 text-accent" />
@@ -277,10 +284,23 @@ const Index = () => {
                   <p className="text-muted-foreground text-sm">
                     Built-in security warnings and code validation
                   </p>
+                  <Button variant="outline" size="sm" className="mt-4">
+                    View Security →
+                  </Button>
                 </CardContent>
               </Card>
 
-              <Card className="cyber-glow">
+              <Card className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => {
+                if (processedFiles.length > 0) {
+                  document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+                  toast({
+                    title: "Process Files First",
+                    description: "Upload and process PDFs first, then you can download them.",
+                  });
+                }
+              }}>
                 <CardContent className="p-6 text-center">
                   <div className="p-3 bg-warning/20 rounded-full w-fit mx-auto mb-4">
                     <Download className="h-8 w-8 text-warning" />
@@ -289,6 +309,9 @@ const Index = () => {
                   <p className="text-muted-foreground text-sm">
                     Download individual files or batch ZIP archives
                   </p>
+                  <Button variant="outline" size="sm" className="mt-4">
+                    Learn More →
+                  </Button>
                 </CardContent>
               </Card>
             </div>
@@ -300,7 +323,9 @@ const Index = () => {
 
       {/* Main Tool Section */}
       <div id="tool" className="container mx-auto px-4 py-16 space-y-8">
-        <SecurityWarning />
+        <div id="security">
+          <SecurityWarning />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* PDF Upload Section */}
@@ -359,7 +384,8 @@ const Index = () => {
         </div>
 
         {/* Processing Status */}
-        {(processedFiles.length > 0 || isProcessing) && (
+        <div id="download">
+          {(processedFiles.length > 0 || isProcessing) && (
           <ProcessingStatus
             files={processedFiles}
             progress={progress}
@@ -367,7 +393,8 @@ const Index = () => {
             onDownloadAll={handleDownloadAll}
             onDownloadFile={handleDownloadFile}
           />
-        )}
+          )}
+        </div>
 
         {/* Documentation Section */}
         <Card>
