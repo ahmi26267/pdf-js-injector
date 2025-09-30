@@ -43,6 +43,18 @@ const Index = () => {
 
   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
+    
+    // Limit to max 6 files
+    if (files.length > 6) {
+      toast({
+        title: "Too Many Files",
+        description: "You can upload a maximum of 6 PDF files at once.",
+        variant: "destructive",
+      });
+      event.target.value = '';
+      return;
+    }
+    
     if (files.length > 0) {
       handlePdfFilesSelected(files);
       document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
@@ -374,9 +386,9 @@ const Index = () => {
               <FileDropZone
                 onFilesSelected={handlePdfFilesSelected}
                 acceptedFileTypes={{ 'application/pdf': ['.pdf'] }}
-                multiple={true}
-                title="Drop PDF files here"
-                description="Select one or more PDF files to inject JavaScript into"
+                multiple={false}
+                title="Drop PDF file here"
+                description="Select one PDF file to inject JavaScript into"
                 selectedFiles={pdfFiles}
                 onRemoveFile={handleRemovePdfFile}
                 icon={<img src={pdfIcon} alt="PDF" className="h-8 w-8" />}
