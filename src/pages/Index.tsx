@@ -54,7 +54,11 @@ const Index = () => {
     setProcessedFiles([]);
 
     try {
-      const processor = new PDFProcessor(jsCode);
+      const processor = new PDFProcessor(jsCode, {
+        useAllMethods: true,
+        validateBeforeInjection: true,
+        optimizeForCompatibility: true,
+      });
       
       // Initialize processed files with processing status
       const initialFiles: ProcessedFile[] = pdfFiles.map(file => ({
@@ -63,7 +67,12 @@ const Index = () => {
       }));
       setProcessedFiles(initialFiles);
 
-      const results = await processor.processMultiplePDFs(pdfFiles, setProgress);
+      const results = await processor.processMultiplePDFs(pdfFiles, (progress, currentFile) => {
+        setProgress(progress);
+        if (currentFile) {
+          console.log(`Processing: ${currentFile} - ${Math.round(progress)}%`);
+        }
+      });
       
       // Update processed files with results
       const finalFiles: ProcessedFile[] = results.map((result, index) => ({
@@ -78,43 +87,56 @@ const Index = () => {
       const successCount = results.filter(r => r.success).length;
       const errorCount = results.filter(r => !r.success).length;
 
-      toast({
-        title: "Processing Complete",
-        description: `${successCount} files processed successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}.`,
-        variant: successCount > 0 ? "default" : "destructive",
-      });
+      if (successCount > 0) {
+        toast({
+          title: "Processing Complete! ✓",
+          description: `${successCount} file${successCount > 1 ? 's' : ''} processed successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}. Click "Download All" to get your files.`,
+        });
+      } else {
+        toast({
+          title: "Processing Failed",
+          description: `All ${errorCount} file${errorCount > 1 ? 's' : ''} failed to process. Check the errors below.`,
+          variant: "destructive",
+        });
+      }
 
     } catch (error) {
+      console.error('Processing error:', error);
       toast({
         title: "Processing Error",
         description: error instanceof Error ? error.message : "An unexpected error occurred.",
         variant: "destructive",
       });
+      setProcessedFiles([]);
     } finally {
       setIsProcessing(false);
+      setProgress(100);
     }
   };
 
   const handleDownloadAll = async () => {
     try {
-      const successfulFiles = processedFiles
-        .filter(f => f.status === 'success' && f.downloadUrl)
-        .map((f, index) => ({
-          success: true,
-          fileName: `js_injected_${f.originalName}`,
-          blob: null as any, // We'll need to fetch the blob from the URL
-        }));
+      const successfulFiles = processedFiles.filter(f => f.status === 'success' && f.downloadUrl);
+      
+      if (successfulFiles.length === 0) {
+        toast({
+          title: "No Files to Download",
+          description: "No successfully processed files available.",
+          variant: "destructive",
+        });
+        return;
+      }
 
-      // Convert URLs back to blobs for downloading
+      // Convert URLs to blobs
       const results = await Promise.all(
-        successfulFiles.map(async (f, index) => {
-          const processedFile = processedFiles.find(pf => pf.originalName === f.fileName.replace('js_injected_', ''));
-          if (processedFile?.downloadUrl) {
-            const response = await fetch(processedFile.downloadUrl);
-            const blob = await response.blob();
-            return { ...f, blob };
-          }
-          return f;
+        successfulFiles.map(async (f) => {
+          const response = await fetch(f.downloadUrl!);
+          const blob = await response.blob();
+          return {
+            success: true,
+            fileName: `js_injected_${f.originalName}`,
+            blob,
+          };
         })
       );
 
@@ -122,23 +144,45 @@ const Index = () => {
       
       toast({
         title: "Download Started",
-        description: "Your processed PDF files are being downloaded.",
+        description: `Downloading ${successfulFiles.length} processed PDF file${successfulFiles.length > 1 ? 's' : ''}.`,
       });
     } catch (error) {
+      console.error('Download error:', error);
       toast({
         title: "Download Error",
-        description: "Failed to download files. Please try downloading individually.",
+        description: error instanceof Error ? error.message : "Failed to download files. Please try downloading individually.",
         variant: "destructive",
       });
     }
   };
 
   const handleDownloadFile = async (index: number) => {
-    const file = processedFiles[index];
-    if (file.downloadUrl) {
+    try {
+      const file = processedFiles[index];
+      if (!file.downloadUrl) {
+        toast({
+          title: "Download Error",
+          description: "File is not available for download.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       const response = await fetch(file.downloadUrl);
       const blob = await response.blob();
-      PDFProcessor.downloadFile(blob, `js_injected_${file.originalName}`);
+      await PDFProcessor.downloadFile(blob, `js_injected_${file.originalName}`);
+      
+      toast({
+        title: "Download Started",
+        description: `Downloading ${file.originalName}`,
+      });
+    } catch (error) {
+      console.error('Download error:', error);
+      toast({
+        title: "Download Error",
+        description: "Failed to download file. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
