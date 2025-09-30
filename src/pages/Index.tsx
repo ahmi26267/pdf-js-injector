@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Shield, Code, FileText, Download, Github, BookOpen } from 'lucide-react';
+import { Shield, Code, FileText, Download, Github, BookOpen, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { FileDropZone } from '@/components/FileDropZone';
 import { JavaScriptEditor } from '@/components/JavaScriptEditor';
 import { SecurityWarning } from '@/components/SecurityWarning';
-import { ProcessingStatus, ProcessedFile } from '@/components/ProcessingStatus';
+import { ProcessingStatus, type ProcessedFile } from '@/components/ProcessingStatus';
 import { UpdateChecker } from '@/components/UpdateChecker';
 import { PDFProcessor } from '@/utils/pdf';
 import { useToast } from '@/hooks/use-toast';
@@ -57,6 +57,8 @@ const Index = () => {
     setProgress(0);
     setProcessedFiles([]);
 
+    console.log('✓ Starting PDF processing...');
+
     try {
       const processor = new PDFProcessor(jsCode, {
         useAllMethods: true,
@@ -71,12 +73,16 @@ const Index = () => {
       }));
       setProcessedFiles(initialFiles);
 
+      console.log('✓ Processing PDFs with all injection methods...');
+
       const results = await processor.processMultiplePDFs(pdfFiles, (progress, currentFile) => {
         setProgress(progress);
         if (currentFile) {
-          console.log(`Processing: ${currentFile} - ${Math.round(progress)}%`);
+          console.log(`⚙️ Processing: ${currentFile} - ${Math.round(progress)}%`);
         }
       });
+      
+      console.log('✓ Processing complete!', { results: results.length });
       
       // Update processed files with results
       const finalFiles: ProcessedFile[] = results.map((result, index) => ({
@@ -90,6 +96,8 @@ const Index = () => {
 
       const successCount = results.filter(r => r.success).length;
       const errorCount = results.filter(r => !r.success).length;
+
+      console.log(`✓ Results: ${successCount} successful, ${errorCount} failed`);
 
       if (successCount > 0) {
         toast({
@@ -105,7 +113,7 @@ const Index = () => {
       }
 
     } catch (error) {
-      console.error('Processing error:', error);
+      console.error('❌ Processing error:', error);
       toast({
         title: "Processing Error",
         description: error instanceof Error ? error.message : "An unexpected error occurred.",
@@ -115,6 +123,7 @@ const Index = () => {
     } finally {
       setIsProcessing(false);
       setProgress(100);
+      console.log('✓ Processing finished');
     }
   };
 
@@ -127,6 +136,7 @@ const Index = () => {
       console.log('✓ Successful files to download:', successfulFiles.length);
       
       if (successfulFiles.length === 0) {
+        console.warn('❌ No files available for download');
         toast({
           title: "No Files to Download",
           description: "No successfully processed files available.",
@@ -134,6 +144,8 @@ const Index = () => {
         });
         return;
       }
+
+      console.log('⚙️ Converting URLs to blobs...');
 
       // Convert URLs to blobs
       const results = await Promise.all(
@@ -151,6 +163,7 @@ const Index = () => {
       console.log('✓ Blobs ready, initiating download...');
       await PDFProcessor.downloadMultipleFiles(results);
       
+      console.log('✓ Download initiated successfully');
       toast({
         title: "Download Started",
         description: `Downloading ${successfulFiles.length} processed PDF file${successfulFiles.length > 1 ? 's' : ''}.`,
@@ -170,7 +183,8 @@ const Index = () => {
     
     try {
       const file = processedFiles[index];
-      if (!file.downloadUrl) {
+      if (!file || !file.downloadUrl) {
+        console.error('❌ File not available:', { index, file });
         toast({
           title: "Download Error",
           description: "File is not available for download.",
@@ -179,8 +193,11 @@ const Index = () => {
         return;
       }
       
+      console.log('⚙️ Fetching file blob...');
       const response = await fetch(file.downloadUrl);
       const blob = await response.blob();
+      
+      console.log('⚙️ Downloading file...');
       await PDFProcessor.downloadFile(blob, `js_injected_${file.originalName}`);
       
       console.log('✓ File download initiated:', file.originalName);
@@ -313,16 +330,32 @@ const Index = () => {
         </div>
 
         {/* Process Button */}
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <Button
             variant="hero"
             size="lg"
             onClick={handleProcessFiles}
             disabled={isProcessing || pdfFiles.length === 0 || !jsCode.trim()}
-            className="px-12"
+            className="px-12 min-w-[300px]"
           >
-            {isProcessing ? 'Processing...' : 'Inject JavaScript into PDFs'}
+            {isProcessing ? (
+              <>
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                Processing {pdfFiles.length} PDF{pdfFiles.length > 1 ? 's' : ''}...
+              </>
+            ) : (
+              <>
+                <Code className="h-5 w-5 mr-2" />
+                Inject JavaScript into {pdfFiles.length || ''} PDF{pdfFiles.length !== 1 ? 's' : ''}
+              </>
+            )}
           </Button>
+          {(pdfFiles.length === 0 || !jsCode.trim()) && (
+            <p className="text-sm text-muted-foreground">
+              {pdfFiles.length === 0 && 'Select PDF files to begin'}
+              {pdfFiles.length > 0 && !jsCode.trim() && 'Enter JavaScript code to proceed'}
+            </p>
+          )}
         </div>
 
         {/* Processing Status */}

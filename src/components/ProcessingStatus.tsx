@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, XCircle, Loader2, FileText } from 'lucide-react';
+import { CheckCircle2, XCircle, Loader2, FileText, Download } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -90,10 +90,15 @@ export const ProcessingStatus: React.FC<ProcessingStatusProps> = ({
               </div>
               {file.status === 'success' && (
                 <Button
-                  variant="outline"
+                  variant="default"
                   size="sm"
-                  onClick={() => onDownloadFile(index)}
+                  onClick={() => {
+                    console.log('🖱️ Download button clicked for file:', index, file.originalName);
+                    onDownloadFile(index);
+                  }}
+                  className="flex items-center gap-2"
                 >
+                  <Download className="h-4 w-4" />
                   Download
                 </Button>
               )}
@@ -101,14 +106,18 @@ export const ProcessingStatus: React.FC<ProcessingStatusProps> = ({
           ))}
         </div>
 
-        {successCount > 0 && (
+        {successCount > 0 && !isProcessing && (
           <Button
             variant="hero"
             size="lg"
-            onClick={onDownloadAll}
-            className="w-full"
+            onClick={() => {
+              console.log('🖱️ Download All button clicked');
+              onDownloadAll();
+            }}
+            className="w-full flex items-center justify-center gap-2"
           >
-            Download All ({successCount} files)
+            <Download className="h-5 w-5" />
+            Download All ({successCount} file{successCount > 1 ? 's' : ''})
           </Button>
         )}
       </CardContent>
