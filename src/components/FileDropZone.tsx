@@ -61,7 +61,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
             <h3 className="text-lg font-semibold text-foreground">{title}</h3>
             <p className="text-muted-foreground mt-1">{description}</p>
           </div>
-          <Button variant="outline" size="sm">
+          <Button variant="default" size="sm">
             Choose Files
           </Button>
         </div>
