@@ -286,26 +286,7 @@ const Index = () => {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <Card 
-                className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" 
-                onClick={handleBatchProcessingClick}
-              >
-                <CardContent className="p-6 text-center">
-                  <div className="p-3 bg-primary/20 rounded-full w-fit mx-auto mb-4">
-                    <FileText className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Batch Processing</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Process multiple PDFs simultaneously with progress tracking
-                  </p>
-                  <Button variant="default" size="sm" className="mt-4">
-                    <Upload className="h-4 w-4 mr-2" />
-                    Upload PDFs
-                  </Button>
-                </CardContent>
-              </Card>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
               <Card className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => {
                 document.getElementById('security')?.scrollIntoView({ behavior: 'smooth' });
               }}>
@@ -361,6 +342,26 @@ const Index = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Batch Processing Card */}
+          <Card 
+            className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" 
+            onClick={handleBatchProcessingClick}
+          >
+            <CardContent className="p-8 text-center h-full flex flex-col justify-center">
+              <div className="p-4 bg-primary/20 rounded-full w-fit mx-auto mb-6">
+                <FileText className="h-12 w-12 text-primary" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-3">Batch Processing</h3>
+              <p className="text-muted-foreground mb-6">
+                Process multiple PDFs simultaneously with progress tracking
+              </p>
+              <Button variant="default" size="lg" className="mx-auto">
+                <Upload className="h-5 w-5 mr-2" />
+                Upload PDFs
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* PDF Upload Section */}
           <Card>
             <CardHeader>
@@ -382,8 +383,10 @@ const Index = () => {
               />
             </CardContent>
           </Card>
+        </div>
 
-          {/* JavaScript Editor */}
+        {/* JavaScript Editor - Full Width */}
+        <div className="w-full">
           <JavaScriptEditor value={jsCode} onChange={setJsCode} />
         </div>
 
