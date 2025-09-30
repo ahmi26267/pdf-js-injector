@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Code, FileText, Download, Github, BookOpen, Loader2 } from 'lucide-react';
+import { Shield, Code, FileText, Download, Github, BookOpen, Loader2, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -21,13 +21,34 @@ const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const { toast } = useToast();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handlePdfFilesSelected = (files: File[]) => {
+    console.log('📁 Files selected:', files.length);
     setPdfFiles(prev => [...prev, ...files]);
+    toast({
+      title: "Files Added",
+      description: `${files.length} PDF file${files.length > 1 ? 's' : ''} added successfully.`,
+    });
   };
 
   const handleRemovePdfFile = (index: number) => {
     setPdfFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleBatchProcessingClick = () => {
+    console.log('🖱️ Batch Processing card clicked');
+    fileInputRef.current?.click();
+  };
+
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    if (files.length > 0) {
+      handlePdfFilesSelected(files);
+      document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    // Reset input value so the same files can be selected again
+    event.target.value = '';
   };
 
   const handleProcessFiles = async () => {
@@ -217,6 +238,16 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-dark">
+      {/* Hidden file input for batch processing card */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf,application/pdf"
+        multiple
+        onChange={handleFileInputChange}
+        className="hidden"
+      />
+      
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div 
@@ -256,9 +287,10 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <Card className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => {
-                document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
-              }}>
+              <Card 
+                className="cyber-glow cursor-pointer hover:scale-105 transition-transform duration-300" 
+                onClick={handleBatchProcessingClick}
+              >
                 <CardContent className="p-6 text-center">
                   <div className="p-3 bg-primary/20 rounded-full w-fit mx-auto mb-4">
                     <FileText className="h-8 w-8 text-primary" />
@@ -267,8 +299,9 @@ const Index = () => {
                   <p className="text-muted-foreground text-sm">
                     Process multiple PDFs simultaneously with progress tracking
                   </p>
-                  <Button variant="outline" size="sm" className="mt-4">
-                    Get Started →
+                  <Button variant="default" size="sm" className="mt-4">
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload PDFs
                   </Button>
                 </CardContent>
               </Card>
