@@ -31,7 +31,10 @@ const Index = () => {
   };
 
   const handleProcessFiles = async () => {
+    console.log('🚀 Processing started', { pdfCount: pdfFiles.length, codeLength: jsCode.length });
+    
     if (pdfFiles.length === 0) {
+      console.warn('❌ No PDFs selected');
       toast({
         title: "No PDFs Selected",
         description: "Please select at least one PDF file to process.",
@@ -41,6 +44,7 @@ const Index = () => {
     }
 
     if (!jsCode.trim()) {
+      console.warn('❌ No JavaScript code provided');
       toast({
         title: "No JavaScript Code",
         description: "Please enter JavaScript code to inject into the PDFs.",
@@ -115,8 +119,12 @@ const Index = () => {
   };
 
   const handleDownloadAll = async () => {
+    console.log('📥 Download all started', { fileCount: processedFiles.length });
+    
     try {
       const successfulFiles = processedFiles.filter(f => f.status === 'success' && f.downloadUrl);
+      
+      console.log('✓ Successful files to download:', successfulFiles.length);
       
       if (successfulFiles.length === 0) {
         toast({
@@ -140,6 +148,7 @@ const Index = () => {
         })
       );
 
+      console.log('✓ Blobs ready, initiating download...');
       await PDFProcessor.downloadMultipleFiles(results);
       
       toast({
@@ -147,7 +156,7 @@ const Index = () => {
         description: `Downloading ${successfulFiles.length} processed PDF file${successfulFiles.length > 1 ? 's' : ''}.`,
       });
     } catch (error) {
-      console.error('Download error:', error);
+      console.error('❌ Download error:', error);
       toast({
         title: "Download Error",
         description: error instanceof Error ? error.message : "Failed to download files. Please try downloading individually.",
@@ -157,6 +166,8 @@ const Index = () => {
   };
 
   const handleDownloadFile = async (index: number) => {
+    console.log('📥 Download file started', { index, file: processedFiles[index]?.originalName });
+    
     try {
       const file = processedFiles[index];
       if (!file.downloadUrl) {
@@ -172,12 +183,13 @@ const Index = () => {
       const blob = await response.blob();
       await PDFProcessor.downloadFile(blob, `js_injected_${file.originalName}`);
       
+      console.log('✓ File download initiated:', file.originalName);
       toast({
         title: "Download Started",
         description: `Downloading ${file.originalName}`,
       });
     } catch (error) {
-      console.error('Download error:', error);
+      console.error('❌ Download error:', error);
       toast({
         title: "Download Error",
         description: "Failed to download file. Please try again.",
